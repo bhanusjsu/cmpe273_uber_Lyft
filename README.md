@@ -16,7 +16,7 @@ Geocoder
 requests
 
 After pip install the modules:
-1)Run the requests1.py 
+1)Run the fianl.py
 2)open localhost:9000
 3)In the home page enter your location details  using google autocomplete and the places you want to go.
 4)See the result page with shortest path mapped out on Google maps with a chart comparing the 
