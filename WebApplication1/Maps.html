@@ -1,0 +1,166 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Place Autocomplete</title>
+        <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+        <meta charset="utf-8">
+        <style>
+            /* Always set the map height explicitly to define the size of the div
+             * element that contains the map. */
+            #map {                
+                position: absolute; visibility: visible; left: 420px; top: 100px; height: 600px; width: 1050px; z-index: 400; 
+            }
+            
+            /* Optional: Makes the sample page fill the window. */
+            html, body {
+                height: 100%;
+                margin: 0;
+                padding: 0;
+                background-color: dodgerblue;
+            }
+            .controls {
+                margin-top: 20px;
+                border: 1px solid transparent;
+                border-radius: 2px 0 0 2px;
+                box-sizing: border-box;
+                -moz-box-sizing: border-box;
+                height: 32px;
+                outline: none;
+                box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+            }
+            
+
+            #pac-input:focus, #map:focus {
+                border-color: #4d90fe;
+            }
+            #pac-input1, #button, #label1, #pac-input {
+                margin-top: 120px;
+                font-family: Roboto;
+                font-size: 15px;
+                font-weight: 300;
+                font-weight: bold;
+                margin-left: 12px;
+                padding: 0 25px 0 13px;
+                text-overflow: ellipsis;
+
+            }
+            
+            .forAll{
+                margin-top: 120px;
+                font-family: Roboto;
+                font-size: 15px;
+                font-weight: 300;
+                font-weight: bold;
+                margin-left: 12px;
+                padding: 0 25px 0 13px;
+                text-overflow: ellipsis;
+
+            }
+            
+
+            #pac-input1:focus {
+                border-color: #4d90fe;
+            }
+
+            .pac-container {
+                font-family: Roboto;
+            }
+
+            #type-selector {
+                color: #fff;
+                background-color: #4d90fe;
+                padding: 5px 11px 0px 11px;
+            }
+
+            #type-selector label {
+                font-family: Roboto;
+                font-size: 13px;
+                font-weight: 300;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="fooBar">
+        <label id="pac-input1"  >Source</label>
+        <input id="pac-input" class="controls" type="text" placeholder="Enter a location">
+        <input type="button" id="button" value="Add" onclick = "javascript:add();">
+        </div>
+        
+        
+        <div id="map"></div>
+        
+        <script>
+            var count = 0;
+            function initMap() {
+                var map = new google.maps.Map(document.getElementById('map'), {
+                    center: {lat: 37.3335423, lng: -121.9132912},
+                    zoom: 10
+                });
+                var input = /** @type {!HTMLInputElement} */(
+                        document.getElementById('pac-input'));
+                var label = /** @type {!HTMLInputElement} */(
+                        document.getElementById('pac-input1'));
+                var button1 = document.getElementById('button');
+                //map.controls[google.maps.ControlPosition.TOP_LEFT].push(label);
+                //map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+                //map.controls[google.maps.ControlPosition.TOP_LEFT].push(button1);
+
+                var autocomplete = new google.maps.places.Autocomplete(input);
+                autocomplete.bindTo('bounds', map);
+
+                var infowindow = new google.maps.InfoWindow();
+                var marker = new google.maps.Marker({
+                    map: map,
+                    anchorPoint: new google.maps.Point(0, -29)
+                });
+                autocomplete.addListener('place_changed', function () {
+                    var place = autocomplete.getPlace();
+                    if (place.geometry.viewport) {
+                        map.fitBounds(place.geometry.viewport);
+                    } else {
+                        map.setCenter(place.geometry.location);
+                        map.setZoom(17);  // Why 17? Because it looks good.
+                    }
+                    //window.alert("hi" + place.geometry.location);
+
+                    marker.setPosition(place.geometry.location);
+                    //window.alert("No details available for input: '" + place.geometry.location.LatLng + "'");
+                    marker.setVisible(true);
+                });
+
+            }
+            function add() {
+                //Create an input type dynamically.
+                var foo = document.getElementById("fooBar");
+                var br = document.createElement("br");
+                foo.appendChild(br);
+                var element = document.createElement("input");
+                //window.alert("");
+                //Create Labels
+                var label = document.createElement("Label");
+                label.innerHTML = "Point";
+                //Assign different attributes to the element.
+                element.setAttribute("type", "text");
+                element.setAttribute("value", "");
+                element.setAttribute("name", "Test Name");
+                element.setAttribute("style", "width:200px");
+                element.setAttribute("class","controls");
+                element.setAttribute("id","place"+count);
+                element.setAttribute("placeholder","Enter a location");
+                //label.setAttribute("style", "font-weight:normal");
+                label.setAttribute("id","label"+count);
+                // 'foobar' is the div id, where new fields are to be added
+                label.setAttribute("class","forAll");
+                //Append the element in page (in span).
+                var br = document.createElement("br");
+                foo.appendChild(label);
+                foo.appendChild(element); 
+                foo.appendChild(br);
+            }
+        </script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCrU8Jb48uFfWkIGfYG3qoHPYBf39yBgJ8&libraries=places&callback=initMap"
+        async defer></script>
+
+    </body>
+</html>
