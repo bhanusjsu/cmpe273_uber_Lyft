@@ -1,0 +1,92 @@
+<html>
+    <head>
+        <title>Highcharts Tutorial</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+        <script src="https://code.highcharts.com/highcharts.js"></script>  
+    </head>
+    <body>
+        <div id="container" style="width: 550px; height: 400px; margin: 0 auto"></div>
+        <script language="JavaScript">
+            $(document).ready(function () {
+                var chart = {
+                    type: 'column'
+                };
+                var title = {
+                    text: 'Uber Vs Lyft'
+                };
+                var subtitle = {
+                    text: 'Source: Uber & Lyft'
+                };
+                var xAxis = {
+                    categories: ['Lyft', 'Uber'],
+                    title: {
+                        text: null
+                    }
+                };
+                var yAxis = {
+                    min: 0,
+                    title: {
+                        text: 'User\'s Route Cost in Dollars',
+                        align: 'high'
+                    },
+                    labels: {
+                        overflow: 'justify'
+                    }
+                };
+                var tooltip = {
+                    valueSuffix: ' dollars'
+                };
+                var plotOptions = {
+                    bar: {
+                        dataLabels: {
+                            enabled: true
+                        }
+                    },
+                    series: {
+                        stacking: 'normal'
+                    }
+                };
+                var legend = {
+                    layout: 'vertical',
+                    align: 'right',
+                    verticalAlign: 'top',
+                    x: -40,
+                    y: 100,
+                    floating: false,
+                    borderWidth: 1,
+                    backgroundColor: ((Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'),
+                    shadow: false
+                };
+                var credits = {
+                    enabled: false
+                };
+
+                var series = [{
+                        name: 'Pool',
+                        data: [107, 120]
+                    }, {
+                        name: 'X/XL',
+                        data: [250, 156]
+                    }, {
+                        name: 'SUV',
+                        data: [350, 314]
+                    }
+                ];
+
+                var json = {};
+                json.chart = chart;
+                json.title = title;
+                json.subtitle = subtitle;
+                json.tooltip = tooltip;
+                json.xAxis = xAxis;
+                json.yAxis = yAxis;
+                json.series = series;
+                json.plotOptions = plotOptions;
+                json.legend = legend;
+                json.credits = credits;
+                $('#container').highcharts(json);
+
+            });
+        </script>
+    </body>
+</html>
